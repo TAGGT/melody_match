@@ -17,10 +17,10 @@ Route::middleware('auth:sanctum')->group(function () {
     //Route::get('/posts/home', [PostController::class, 'getMyPosts']);
 
     //IDを指定して取得
-    //Route::get('/posts/{post}', [PostController::class, 'getOnePost']);
+    Route::get('/posts/{post}', [PostController::class, 'getOnePost']);
 
-    // 10件取得
-    //Route::get('/posts/', [PostController::class, 'getPosts']);
+    // すべて取得
+    Route::get('/posts/', [PostController::class, 'getPosts']);
 
     //　作成
     Route::post('/posts', [PostController::class, 'store']);
@@ -28,12 +28,16 @@ Route::middleware('auth:sanctum')->group(function () {
     //　更新
 
     //　削除
-    //Route::delete('/posts/{post}', [PostController::class, 'deletePost']);
+    Route::delete('/posts/{post}', [PostController::class, 'deletePost']);
 
 
-    // *********** 🙆advice関係ここから******************************************************************
-    //Route::post('/reply/{post}/text', [ReplyController::class, 'storeReply']);
-    //Route::get('/reply/{post}/text', [ReplyController::class, 'getReply']);
+    // *********** 🙆reply関係ここから******************************************************************
+    //  作成
+    Route::post('/replies/{post}', [ReplyController::class, 'storeReply']);
+    //　取得
+    Route::get('/replies/{post}', [ReplyController::class, 'getReply']);
+    //  削除
+    Route::delete('/replies/{reply}', [ReplyController::class, 'deleteReply']);
 
 
     // ***********⏺genre関係ここから******************************************************************
