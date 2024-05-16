@@ -42,9 +42,9 @@ class PostController extends Controller
     }
 
     //投稿取得
-    public function getPost(Post $post)
+    public function getOnePost(Post $post)
     {
-        $post = Post::with('user')->with('genre')->with('replies')->find($post->id);
+        $post = Post::with('user')->with('genre')->find($post->id);
         return response()->json([
             'post' => $post
         ]);
