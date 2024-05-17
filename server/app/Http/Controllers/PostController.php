@@ -14,18 +14,20 @@ class PostController extends Controller
     //保存処理
     public function store(Request $request)
     {
-        //Cloudinaryにアップロード
-        $uploadedFileUrl = Cloudinary::upload($request->file('audio')->getRealPath())->getSecurePath();
+        //Cloudinaryに音声ファイルをアップロード
+        
+        
+        $uploadedFileUrl = Cloudinary::uploadFile($request->audio->getRealPath())->getSecurePath();
 
         $post = Post::create([
             'user_id' => Auth::id(),
-            'sound_path' => $request->sound_path,
+            'sound_path' => $uploadedFileUrl,
             'explanation' => $request->explanation,
             'genre_id' => $request->genre_id
         ]);
         
         return response()->json([
-            'post' => $post
+            'url' =>  "test"
         ]);
 
     }

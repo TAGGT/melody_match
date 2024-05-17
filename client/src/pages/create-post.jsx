@@ -8,7 +8,7 @@ const CreatePost = () => {
   const router = useRouter();
     
   const [genre_id, setGenre_id] = useState(1);
-  const [sound_path, setSoundPath] = useState("");
+  const [audio, setAudio] = useState();
   const [explanation, setExplanation] = useState("");
   const [genres, setGenres] = useState([]);
 
@@ -26,12 +26,16 @@ const CreatePost = () => {
   },[]);
 
   const postSound = async () => {
+    console.log(audio);
+
     try {
       const response = await laravelAxios.post(`/api/posts/`, {
         genre_id: Number(genre_id),
-        sound_path: sound_path,
+        audio: audio,
         explanation: explanation
       })
+
+      console.log(response.data);
 
       router.push(`/post/${response.data.post.id}`);
     }catch(err) {
@@ -65,10 +69,8 @@ const CreatePost = () => {
 
         <h3>url</h3>
 
-
-        <textarea placeholder="urlを記入してください"  onChange={(e) => setSoundPath(e.target.value)}>
-        {sound_path}
-        </textarea>
+        <h3>音声ファイル</h3>
+        <input type="file" onChange={(e) => setAudio(e.target.files[0])} />
         <h3>問題概要</h3>
 
         <textarea placeholder="問題の概要を記入してください" onChange={(e) => setExplanation(e.target.value)}>
