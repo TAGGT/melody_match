@@ -33,12 +33,11 @@ const CreatePost = () => {
         explanation: explanation
       })
 
-      console.log(response.data);
-      
+      router.push(`/post/${response.data.post.id}`);
     }catch(err) {
       console.log(err);
-    }
-    
+    }    
+
     
   };
 

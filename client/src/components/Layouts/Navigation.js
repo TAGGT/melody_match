@@ -42,6 +42,13 @@ const Navigation = ({ user }) => {
                                 active={router.pathname === '/create-post'}>
                                 Create Post
                             </NavLink>
+
+                            <NavLink
+                                href="/posts"
+                                active={router.pathname === '/posts'}>
+                                Posts
+                            </NavLink>
+
                         </div>
                     </div>
 
