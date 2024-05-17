@@ -18,11 +18,11 @@ const Navigation = ({ user }) => {
     const [open, setOpen] = useState(false)
 
     return (
-        <nav className="bg-white border-b border-gray-100">
+        <nav className="bg-white border-b border-gray-100 bg-brown">
             {/* Primary Navigation Menu */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
-                    <div className="flex">
+                    <div className="flex ">
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <Link href="/dashboard">
@@ -31,24 +31,36 @@ const Navigation = ({ user }) => {
                         </div>
 
                         {/* Navigation Links */}
-                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <NavLink
-                                href="/dashboard"
-                                active={router.pathname === '/dashboard'}>
-                                Dashboard
-                            </NavLink>
-                            <NavLink
+                        <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex ">
+                            <div className = "bg-my-green p-2 my-2 rounded">
+                                <NavLink
+                                    href="/dashboard"
+                                    active={router.pathname === '/dashboard'}>
+                                    <img src ="../../../images/Home.png"  width="25%" height="25%"></img>
+                                    Dashboard
+                                </NavLink>
+                            </div>
+                            {/* <NavLink
                                 href="/create-post"
                                 active={router.pathname === '/create-post'}>
-                                Create Post
-                            </NavLink>
-
-                            <NavLink
-                                href="/posts"
-                                active={router.pathname === '/posts'}>
-                                Posts
-                            </NavLink>
-
+                                Home
+                            </NavLink> */}
+                            <div className = "bg-my-green p-2 my-2 rounded">
+                                <NavLink
+                                    href="/ToukouIchiran"
+                                    active={router.pathname === '/ToukouIchiran'}>
+                                        <img src ="../../../images/Search.png"  width="25%" height="25%"></img>
+                                    投稿一覧
+                                </NavLink>
+                            </div>
+                            <div className = "bg-my-green p-2 my-2 rounded">
+                                <NavLink
+                                    href="/create-post"
+                                    active={router.pathname === '/create-post'}>
+                                        <img src ="../../../images/plane.png" width="25%" height="25%"></img>
+                                    投稿作成
+                                </NavLink>
+                            </div>
                         </div>
                     </div>
 
