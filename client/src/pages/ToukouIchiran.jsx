@@ -56,42 +56,48 @@ const ToukouIchiran = () => {
   return (
     <>
         <AppLayout>
-            <div className="flex justify-center">
-                <div className = ""  >
-                    <h1>Japanese music</h1>
-                    {japantoukous.map((japantoukou) => (
-                        <div key={japantoukou.id} onClick={() => router.push(`/post/${japantoukou.id}`)}>
-                            <div>{japantoukou.title}</div>
-                            {/* <div>{japantoukou.user_id}</div> */}
-                            {/* <div>{japantoukou.genre_id}</div> */}
-                            <div>{japantoukou.explanation}</div>
-                            <div>{japantoukou.sound_path}</div>
-                        </div>
-                    ))}
+            <div className="flex justify-center ">
+                <div className = "bg-orange m-4 rounded p-4">
+                    <p className = "text-3xl">Japanese music</p>
+                    <div className = "h-[700px] overflow-auto">
+                        {japantoukous.map((japantoukou) => (
+                            <div key={japantoukou.id} onClick={() => router.push(`/post/${japantoukou.id}`)} className = "bg-white m-4 rounded p-4" >
+                                <div>{japantoukou.user_id}</div>
+                                <div className = " flex justify-center">
+                                    <div>{japantoukou.explanation}</div>
+                                    <a href={japantoukou.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div>
-                    <h1>Foreign music</h1>
-                    {foeigntoukous.map((foeigntoukou) => (
-                        <div key={foeigntoukou.id} onClick={() => router.push(`/post/${foeigntoukou.id}`)}>
-                            <div>{foeigntoukou.title}</div>
-                            {/* <div>{foeigntoukou.user_id}</div> */}
-                            {/* <div>{foeigntoukou.genre_id}</div> */}
-                            <div>{foeigntoukou.explanation}</div>
-                            <div>{foeigntoukou.sound_path}</div>
-                        </div>
-                    ))}
+                <div className = "bg-orange m-4 rounded p-4 ">
+                    <p className = "text-3xl">Foreign music</p>
+                    <div className = "h-[700px] overflow-auto">
+                        {foeigntoukous.map((foeigntoukou) => (
+                            <div key={foeigntoukou.id} onClick={() => router.push(`/post/${foeigntoukou.id}`)} className = "bg-white m-4 rounded p-4">
+                                <div>{foeigntoukou.user_id}</div>
+                                <div className = " flex justify-center">
+                                    <div>{foeigntoukou.explanation}</div>
+                                    <a href={foeigntoukou.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
+                                </div>
+                            </div>
+                         ))}
+                    </div>
                 </div>
-                <div>
-                    <h1>Instrumental music</h1>
-                    {insttoukous.map((insttoukou) => (
-                        <div key={insttoukou.id} onClick={() => router.push(`/post/${insttoukou.id}`)}>
-                            <div>{insttoukou.title}</div>
-                            {/* <div>{insttoukou.user_id}</div> */}
-                            {/* <div>{insttoukou.genre_id}</div> */}
-                            <div>{insttoukou.explanation}</div>
-                            <div>{insttoukou.sound_path}</div>
-                        </div>
-                    ))}
+                <div className = "bg-orange m-4 rounded p-4">
+                    <p className = "text-3xl">Instrumental music</p>
+                    <div className = "h-[700px] overflow-auto">
+                        {insttoukous.map((insttoukou) => (
+                            <div key={insttoukou.id} onClick={() => router.push(`/post/${insttoukou.id}`)} className = "bg-white m-4 rounded p-4">
+                                <div>{insttoukou.user_id}</div>
+                                <div className = " flex justify-center">
+                                    <div>{insttoukou.explanation}</div>
+                                    <a href={insttoukou.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </AppLayout>
