@@ -162,9 +162,9 @@ const PostDetail = () => {
                 <div class="tag border-gray-400 w-5/6 h-44 border-solid border-2 rounded p-3 m-2 lex flex-col">   
                   <p class="h-5/6 text-xl">{post.explanation}</p>
                 {/* 後で書き換える */}
-                  <div class="mb-0 text-right mr-1 text-xg">
-                    <a href={post.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
-                  </div>
+
+                    <audio controls src={post.sound_path} type="audio/mp3" class="h-5/6 text-xl"></audio>
+
                 </div>
               </div>
 
