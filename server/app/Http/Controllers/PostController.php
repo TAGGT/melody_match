@@ -72,7 +72,6 @@ class PostController extends Controller
     public function updatePost(Request $request, Post $post)
     {
         $post->update([
-            'sound_path' => $request->sound_path,
             'explanation' => $request->explanation,
             'genre_id' => $request->genre_id
         ]);
