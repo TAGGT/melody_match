@@ -62,9 +62,11 @@ const PostDetail = () => {
   const deleteReply = async (replyId) => {
     try {
       const response = await laravelAxios.delete(`api/replies/${replyId}`);
-      console.log(response.data)
-
-      setReplies(replies.filter((reply) => reply.id !== replyId));
+      
+      if(response.data.message !== "不正なアクセスです") {
+        setReplies(replies.filter((reply) => reply.id !== replyId));
+      }
+      
     } catch(err) {
       console.log(err);
     }
