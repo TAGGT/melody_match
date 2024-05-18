@@ -92,12 +92,12 @@ const CreatePost = () => {
 
 
         <div class= "flex items-center justify-center">
-        <button onClick={postSound} class='flex items-center justify-center text-center w-7/12 p-5 my-10 rounded border-black bg-orange text-2xl font-semibold'>Upload</button>
+
+       
+        <button onClick={postSound} class='flex text-center p-10 my-5 rounded border-black bg-orange '>Upload</button>
+
         </div>
       </div>
-      
-    
-      
       
     </AppLayout>
   );
