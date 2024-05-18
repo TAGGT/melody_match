@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
+
 use App\Models\Post;
 
 class PostController extends Controller
@@ -15,20 +16,22 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //Cloudinaryに音声ファイルをアップロード
-        
-        
-        $uploadedFileUrl = Cloudinary::uploadFile($request->audio->getRealPath())->getSecurePath();
+        $audioFile = $request->file('audio');
 
+        // Cloudinaryにアップロード
+        $uploadedFileUrl = Cloudinary::uploadFile($audioFile->getRealPath(), [
+            'folder' => 'audios',
+        ])->getSecurePath();
+
+        //投稿データを保存
         $post = Post::create([
             'user_id' => Auth::id(),
             'sound_path' => $uploadedFileUrl,
             'explanation' => $request->explanation,
             'genre_id' => $request->genre_id
         ]);
-        
-        return response()->json([
-            'url' =>  "test"
-        ]);
+
+        return response()->json(['post' => $post]);
 
     }
 

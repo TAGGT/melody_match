@@ -25,24 +25,25 @@ const CreatePost = () => {
     fetchGenres();
   },[]);
 
+
   const postSound = async () => {
-    console.log(audio);
-
+    const formData = new FormData();
+    formData.append('genre_id', Number(genre_id));
+    formData.append('audio', audio);
+    formData.append('explanation', explanation);
+  
     try {
-      const response = await laravelAxios.post(`/api/posts/`, {
-        genre_id: Number(genre_id),
-        audio: audio,
-        explanation: explanation
-      })
-
+      const response = await laravelAxios.post(`/api/posts/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
       console.log(response.data);
-
       router.push(`/post/${response.data.post.id}`);
-    }catch(err) {
+    } catch (err) {
       console.log(err);
-    }    
-
-    
+    }
   };
 
   
@@ -70,7 +71,7 @@ const CreatePost = () => {
         <h3>url</h3>
 
         <h3>音声ファイル</h3>
-        <input type="file" onChange={(e) => setAudio(e.target.files[0])} />
+        <input type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
         <h3>問題概要</h3>
 
         <textarea placeholder="問題の概要を記入してください" onChange={(e) => setExplanation(e.target.value)}>
