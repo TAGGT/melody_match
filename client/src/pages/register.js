@@ -38,7 +38,9 @@ const Register = () => {
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        <div className="flex justify-center">
+                            <img class="shadow-2xl rounded-full" src ="/images/Melody_match_logo.png" width="40%" height="50%"></img>
+                        </div>
                     </Link>
                 }>
                 <form onSubmit={submitForm}>
