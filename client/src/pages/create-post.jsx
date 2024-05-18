@@ -114,6 +114,7 @@ const CreatePost = () => {
   },[]);
 
 
+  
   const postSound = async () => {
     const formData = new FormData();
     formData.append('genre_id', Number(genre_id));
@@ -172,7 +173,7 @@ const CreatePost = () => {
            
           <div id="file-audio" class="items-center justify-center w-100 h-28">
             <h3 class="text-4xl text-black-700 text-center font-semibold">url</h3>
-            <input id="failinp" type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
+            <input class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" id="failinp" type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
           </div>
             
 
@@ -186,15 +187,20 @@ const CreatePost = () => {
           </textarea>
 
 
-        <h3 class="text-4xl text-black-700 text-center font-semibold">ジャンル</h3>
-        <select class="flex mx-auto text-black-700 text-center font-semibold" name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
+        
+        <select class="flex mx-auto text-black-700 text-center font-semibold text-center w-7/12 p-5 my-10" name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
         {genres.map((genre) => (
           <option key={genres.id} value={genre.id}>{genre.name}</option>
        
      ))}
 	      </select>
+
+
         <div class= "flex items-center justify-center">
+
+       
         <button onClick={postSound} class='flex text-center p-10 my-5 rounded border-black bg-orange '>Upload</button>
+
         </div>
       </div>
 

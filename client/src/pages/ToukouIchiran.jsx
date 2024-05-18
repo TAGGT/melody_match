@@ -7,7 +7,7 @@ import ResponsiveNavLink, {
 } from '@/components/ResponsiveNavLink'
 import { DropdownButton } from '@/components/DropdownLink'
 import { useAuth } from '@/hooks/auth'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from 'next/router';
 import laravelAxios from '@/lib/laravelAxios';
 import AppLayout from '@/components/Layouts/AppLayout'
@@ -49,8 +49,34 @@ const ToukouIchiran = () => {
         genreFilter(); // toukous が更新されたときに実行する
     }, [toukous]); // toukous が更新されたときに実行する
 
+    // const handleChangeFile = async (event) => {
+    //     const _file = event.target.files[0];
+    //     const _audioBuffer = await audioContext.current.decodeAudioData( // 追加
+    //       await _file.arrayBuffer()
+    //     );
+    //     setAudioBuffer(_audioBuffer); // 追加
+    //   };
 
-    
+    //   const audioContext = useRef(null);
+	//   useEffect(()=>{
+    //     audioContext.current = new AudioContext();
+    //   },[])
+
+    //   const [audioBuffer, setAudioBuffer] = useState(null);
+
+	//   const handleClickPlay = () => { 
+    //     // 自動再生ブロックにより停止されたオーディオを再開させる
+    //     if (audioContext.current.state === "suspended") {
+    //       audioContext.current.resume();
+    //     }
+    //     // ソースノード生成 ＋ 音声を設定
+    //     const sourceNode = audioContext.current.createBufferSource();
+    //     sourceNode.buffer = audioBuffer;
+    //     // 出力先に接続
+    //     sourceNode.connect(audioContext.current.destination);
+    //     // 再生発火
+    //     sourceNode.start();
+    // };
 
 
   return (
@@ -62,11 +88,9 @@ const ToukouIchiran = () => {
                     <div className = "h-[700px] overflow-auto">
                         {japantoukous.map((japantoukou) => (
                             <div key={japantoukou.id} onClick={() => router.push(`/post/${japantoukou.id}`)} className = "bg-white m-4 rounded p-4" >
-                                <div>{japantoukou.user_id}</div>
-                                <div className = " flex justify-center">
-                                    <div>{japantoukou.explanation}</div>
-                                    <a href={japantoukou.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
-                                </div>
+                                <div>{japantoukou.user_id}</div>                               
+                                <div>{japantoukou.explanation}</div>
+                                <audio controls src={japantoukou.sound_path} type="audio/mp3"></audio>
                             </div>
                         ))}
                     </div>
@@ -77,10 +101,8 @@ const ToukouIchiran = () => {
                         {foeigntoukous.map((foeigntoukou) => (
                             <div key={foeigntoukou.id} onClick={() => router.push(`/post/${foeigntoukou.id}`)} className = "bg-white m-4 rounded p-4">
                                 <div>{foeigntoukou.user_id}</div>
-                                <div className = " flex justify-center">
-                                    <div>{foeigntoukou.explanation}</div>
-                                    <a href={foeigntoukou.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
-                                </div>
+                                <div>{foeigntoukou.explanation}</div>
+                                <audio controls src={foeigntoukou.sound_path} type="audio/mp3"></audio>
                             </div>
                          ))}
                     </div>
@@ -91,10 +113,8 @@ const ToukouIchiran = () => {
                         {insttoukous.map((insttoukou) => (
                             <div key={insttoukou.id} onClick={() => router.push(`/post/${insttoukou.id}`)} className = "bg-white m-4 rounded p-4">
                                 <div>{insttoukou.user_id}</div>
-                                <div className = " flex justify-center">
-                                    <div>{insttoukou.explanation}</div>
-                                    <a href={insttoukou.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
-                                </div>
+                                <div>{insttoukou.explanation}</div>
+                                <audio controls src={insttoukou.sound_path} type="audio/mp3"></audio>
                             </div>
                         ))}
                     </div>
