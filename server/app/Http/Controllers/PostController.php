@@ -38,6 +38,13 @@ class PostController extends Controller
     //投稿削除
     public function deletePost(Post $post)
     {
+        // user_idがログインユーザーのidと一致するかチェック
+        if ($post->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => '不正なアクセスです'
+            ]);
+        }
+        
         $post->delete();
     }
 
@@ -71,6 +78,13 @@ class PostController extends Controller
     //投稿更新
     public function updatePost(Request $request, Post $post)
     {
+        // user_idがログインユーザーのidと一致するかチェック
+        if ($post->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => '不正なアクセスです'
+            ]);
+        }
+
         $post->update([
             'explanation' => $request->explanation,
             'genre_id' => $request->genre_id
