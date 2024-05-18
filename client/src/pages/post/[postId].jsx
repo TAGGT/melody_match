@@ -1,26 +1,72 @@
 import laravelAxios from '@/lib/laravelAxios'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/auth';
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-// import { audioPlay } from '@mui/icons-material/PlayCircleFilledWhite';
+import 'tailwindcss/tailwind.css';
 
 
 // POINT input要素、textarea要素の使い方
 const PostDetail = () => {
+  const [replies, setReplies] = useState([]);
+  const formRef = useRef(null);
+  const scrollRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(formRef.current);
+    const href = window.location.href;
+
+    try {
+      const response = await fetch(href, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setReplies((prevMessages) => [...prevMessages, data]);
+
+      // Clear form fields
+      formRef.current.reset();
+
+      // Scroll to bottom of the container
+
+      useEffect(() => {
+        // Scroll to bottom of the container whenever messages change
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo({
+            top: scrollRef.current.scrollHeight + 100,
+            behavior: 'smooth',
+          });
+        }
+      }, [replies]);
+
+
+      if (scrollRef.current) {
+         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  };
+
+
+  
   const { user } = useAuth({ middleware: 'auth'})
 
   //about quiz state
-  const [replies, setReplies] = useState([]);
+  //上へ移動 const [replies, setReplies] = useState([]);
   const [post , setPost] = useState({id: -1, user_id: -1, genre_id: -1,explanation: "", sound_path: "", genre: {}});
   const [text, setText] = useState("");
 
   const router = useRouter();
   const { postId } = router.query;
 
-  
-  
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -72,7 +118,7 @@ const PostDetail = () => {
     }
   }
 
-  //　リプライの投稿
+  // リプライ投稿
   const postReply = async () => {
 
     try {
@@ -81,8 +127,10 @@ const PostDetail = () => {
         post_id: postId
       });
 
+      console.log(response.data);
       setReplies(response.data);
       setText("");
+      window.location.reload();
 
     } catch(err) {
       console.log(err);
@@ -92,11 +140,11 @@ const PostDetail = () => {
 
   
   return (
-
+<div class="overflow-hidden">
     <AppLayout sx={{textAlign: 'center'} }
         header={
           <h3>
-                詳細表示
+            詳細表示
           </h3>
         }>
         <Head>
@@ -104,50 +152,50 @@ const PostDetail = () => {
         </Head>
 
 
-        <div class="flex flex-row overflow-hidden">
+        <div class="overflow-hidden h-[700px] flex flex-row">
           <div class="basis-2/5">
 
             <div class="flex flex-col">
 
-              <div className='mt-8 ml-20 h-screen'>
-                <h3 className='ml-4'>投稿内容</h3>
-                <div class="tag border-gray-400 w-5/6 h-1/4 border-solid border-2 rounded p-3 m-2 lex flex-col">   
-                  <p class="h-5/6">{post.explanation}</p>
+              <div className='mt-8 ml-20 h-screen' class="mt-8 ml-24 text-xl">
+                <h3 class="text-xl ml-6 font-semibold">投稿内容</h3>
+                <div class="tag border-gray-400 w-5/6 h-44 border-solid border-2 rounded p-3 m-2 lex flex-col">   
+                  <p class="h-5/6 text-xl">{post.explanation}</p>
                 {/* 後で書き換える */}
-                  <div class="mb-0 text-right mr-1">
-                    {/* <div><audioPlay className="h-5 w-5"/></div>  */}
-                    <button>再生する</button>
+                  <div class="mb-0 text-right mr-1 text-xg">
+                    <a href={post.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
                   </div>
                 </div>
               </div>
 
-              <div class="post-detail ml-24 mt-8 absolute bottom-8">
-                <p>リプライ投稿<br/>
-                  <textarea cols="40" rows="4" onChange={(e) => setText(e.target.value)} value={text} border-gray-400/>
+              <form class="post-detail ml-24 mt-8 absolute bottom-8">
+                <p class="text-xl font-semibold">リプライ投稿<br/>
+                  <textarea class="mt-2" cols="40" rows="4" onChange={(e) => setText(e.target.value)} value={text} border-gray-400/>
                 </p>
-                <div class="text-right mr-4">
-                  <button onClick={() => postReply()}>投稿する</button>
+                <div ref={formRef} onSubmit={handleSubmit} class="text-right -mr-2">
+                  <button type="button" onClick={postReply}><img src ="/images/plane.png" width="85%" height="85%"></img></button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
 
           <div class="basis-3/5 ml-12">
-            <h3 class="mt-8 text-center mr-12">リプライ一覧</h3>
-            <div class="bg-[url('/images/comment.png')] mt-4 w-5/6 h-screen bg-contain bg-no-repeat">
+            <h3 class="mt-8 text-center mr-12 text-xl font-semibold">リプライ一覧</h3>
+            <div class="bg-[url('/images/comment.png')] mt-4 w-5/6 h-[700px] bg-contain bg-no-repeat">
               
-              
-            <div className='absolute top-60 right-36 h-2/3 w-1/2 overflow-y-scroll flex flex-col-reverse'>
+            <div ref={scrollRef} className='overflow-y-auto absolute top-60 right-36 h-2/3 w-1/2 flex flex-col'>
+            
               {replies.map((reply, index) => (
                 <>
                   <div key={reply.id}>
-                    <p class="ml-36 pt-8 underline">{reply.user.name}</p>
-                    <p class="ml-36">{reply.text}</p>
-                    <div class="flex flex-row-reverse">
-                      {user.id === reply.user.id && <button class="pr-6">編集</button>}
-                      {user.id === reply.user.id && <button class="pr-3" onClick={() => deleteReply(reply.id)}>削除</button>}
+                    <p class="ml-36 pt-4 underline text-xl">{reply.user.name}</p>
+                    <p class="ml-36 text-xl">{reply.text}</p>
+                    <div class="flex flex-row-reverse mr-6">
+                      {user.id === reply.user.id && <button class="w-12 h-6 pr-3 text-right text-base border border-blue-900 rounded"> 編集</button>}
+                      <div class="pl-2"></div>
+                      {user.id === reply.user.id && <button class="w-12 h-6 pr-3 text-right text-base border border-blue-900 rounded"> 削除</button>}
                     </div>
-                  </div> 
+                  </div>
                 </>
               ))}
               </div>
@@ -156,6 +204,7 @@ const PostDetail = () => {
         </div>
 
     </AppLayout>
+    </div>
   );
 };
 
