@@ -13,6 +13,92 @@ const CreatePost = () => {
   const [audio, setAudio] = useState();
   const [explanation, setExplanation] = useState("");
   const [genres, setGenres] = useState([]);
+  const [record, setRecord] = useState(true);
+
+  async function audioRecord(){
+    try {
+      const buttonStart = document.querySelector('#buttonStart')
+      const buttonStop = document.querySelector('#buttonStop')
+      const sound = document.querySelector('#audio')
+      const Finput = document.querySelector('#failinp')
+      failinp
+      console.log(buttonStart)
+
+
+      const stream = await navigator.mediaDevices.getUserMedia({ // <1>
+        video: false,
+        audio: true,
+      })
+  
+      const [track] = stream.getAudioTracks()
+      const settings = track.getSettings() // <2>
+  
+      const audioContext = new AudioContext() 
+      await audioContext.audioWorklet.addModule('../../../js/audio-recorder.js') // <3>
+  
+  
+      const mediaStreamSource = audioContext.createMediaStreamSource(stream) // <4>
+      const audioRecorder = new AudioWorkletNode(audioContext, 'audio-recorder') // <5>
+      const buffers = []
+  
+  
+  
+      audioRecorder.port.addEventListener('message', event => { // <6>
+        buffers.push(event.data.buffer)
+      })
+      audioRecorder.port.start() // <7>
+  
+      mediaStreamSource.connect(audioRecorder) // <8>
+      audioRecorder.connect(audioContext.destination)
+  
+      buttonStart.addEventListener('click', event => {
+        buttonStart.setAttribute('disabled', 'disabled')
+        buttonStop.removeAttribute('disabled')
+  
+        const parameter = audioRecorder.parameters.get('isRecording')
+        parameter.setValueAtTime(1, audioContext.currentTime) // <9>
+  
+        buffers.splice(0, buffers.length)
+      })
+  
+      buttonStop.addEventListener('click', event => {
+        buttonStop.setAttribute('disabled', 'disabled')
+        buttonStart.removeAttribute('disabled')
+  
+        const parameter = audioRecorder.parameters.get('isRecording')
+        parameter.setValueAtTime(0, audioContext.currentTime) // <10>
+        console.log(Finput);
+        
+  
+        const blob = encodeAudio(buffers, settings) // <11>
+        setAudio(blob);
+  
+        const url = URL.createObjectURL(blob)
+  
+        sound.src = url
+      })
+  
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  audioRecord();
+
+  useEffect(() => {
+    const record_audio = document.querySelector('#record-audio')
+    const file_audio = document.querySelector('#file-audio')
+
+    if (record) {
+      file_audio.setAttribute('hidden', 'hidden')
+      record_audio.removeAttribute('hidden')
+    } else{
+      record_audio.setAttribute('hidden', 'hidden')
+      file_audio.removeAttribute('hidden')
+    }
+  }, [record])
+
+  
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -63,21 +149,40 @@ const CreatePost = () => {
         <Head>
             <title>Laravel - Create</title>
         </Head>
-      
-      
-   
-
-
+ 
 
       <div class=" items-center justify-center w-100 h-28">
         <h1 class="text-4xl text-black-700 text-center font-semibold">Post your audio file</h1>
-  
-       
-        
-          <input class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
 
-        
-          <textarea class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)}>
+        <select class="flex mx-auto text-black-700 text-center font-semibold" name="upload-way" onChange={(e) => setRecord(!record)}>
+          <option key={0} value="record">record</option>
+          <option key={1} value="file">file</option>
+	      </select>
+
+
+          <div id="record-audio" class="items-center justify-center w-100 h-28">
+              <h3 class="text-4xl text-black-700 text-center font-semibold">音声録音</h3>
+              <div>
+                <button class="m-1" type="button" id="buttonStart">Start</button>
+                <button class="m-1" type="button" id="buttonStop" disabled>Stop</button>
+              </div>
+              <div>
+                <audio controls id="audio"></audio>
+              </div>
+          </div>
+           
+          <div id="file-audio" class="items-center justify-center w-100 h-28">
+            <h3 class="text-4xl text-black-700 text-center font-semibold">url</h3>
+            <input class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" id="failinp" type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
+          </div>
+            
+
+          
+          
+
+
+          <h3 class="text-4xl text-black-700 text-center font-semibold">comment</h3>
+          <textarea class="flex mx-auto text-black-700 text-center font-semibold" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)}>
           {explanation}
           </textarea>
 
@@ -98,6 +203,10 @@ const CreatePost = () => {
 
         </div>
       </div>
+
+      <script src="../../../js/encode-audio.js"></script>
+
+
       
     </AppLayout>
   );

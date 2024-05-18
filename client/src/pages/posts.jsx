@@ -42,6 +42,7 @@ const Posts = () => {
         {posts.map((post) => (
           <div>
             <button onClick={() => router.push(`/post/${post.id}`)}>{post.explanation}</button>
+            <audio controls src={post.sound_path}></audio>
           </div>
         ))}
       </div>
