@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
 
+
+
 const CreatePost = () => {
   const router = useRouter();
     
@@ -46,7 +48,8 @@ const CreatePost = () => {
     }
   };
 
-  
+
+
   return (
     <AppLayout sx={{textAlign: 'center'}}
         header={
@@ -54,31 +57,45 @@ const CreatePost = () => {
                 Create
           </h3>
         }>
+
+
         <Head>
             <title>Laravel - Create</title>
         </Head>
       
       
-      <div>
-        <h3>ジャンル</h3>
-        <select name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
+   
+
+
+
+      <div class=" items-center justify-center w-100 h-28">
+        <h1 class="text-4xl text-black-700 text-center font-semibold">Post your audio file</h1>
+  
+       
+          <h3 class="text-4xl text-black-700 text-center font-semibold">url</h3>
+          <input type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
+
+          <h3 class="text-4xl text-black-700 text-center font-semibold">comment</h3>
+          <textarea class="flex mx-auto text-black-700 text-center font-semibold" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)}>
+          {explanation}
+          </textarea>
+
+
+        <h3 class="text-4xl text-black-700 text-center font-semibold">ジャンル</h3>
+        <select class="flex mx-auto text-black-700 text-center font-semibold" name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
         {genres.map((genre) => (
           <option key={genres.id} value={genre.id}>{genre.name}</option>
-        
-        ))}
+       
+     ))}
 	      </select>
-
-        <h3>url</h3>
-
-        <h3>音声ファイル</h3>
-        <input type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
-        <h3>問題概要</h3>
-
-        <textarea placeholder="問題の概要を記入してください" onChange={(e) => setExplanation(e.target.value)}>
-        {explanation}
-        </textarea>
+        <div class= "flex items-center justify-center">
+        <button class='flex text-center p-10 my-5 rounded border-black bg-orange '>Upload</button>
+        </div>
       </div>
-      <button onClick={postSound}>投稿</button>
+      
+    
+      
+      
     </AppLayout>
   );
 };
