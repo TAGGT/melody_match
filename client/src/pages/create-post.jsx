@@ -89,12 +89,9 @@ const CreatePost = () => {
      ))}
 	      </select>
         <div class= "flex items-center justify-center">
-        <button class='flex text-center p-10 my-5 rounded border-black bg-orange '>Upload</button>
+        <button onClick={postSound} class='flex text-center p-10 my-5 rounded border-black bg-orange '>Upload</button>
         </div>
       </div>
-      
-    
-      
       
     </AppLayout>
   );
