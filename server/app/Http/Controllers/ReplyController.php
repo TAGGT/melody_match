@@ -31,10 +31,35 @@ class ReplyController extends Controller
         return response()->json($replies);
     }
 
-    public function deleteReply($reply)
+    public function deleteReply(Reply $reply)
     {
-        $reply = Reply::find($reply);
+        // user_idがログインユーザーのidと一致するかチェック
+        if ($reply->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => '不正なアクセスです'
+            ]);
+        }
+
         $reply->delete();
+        return response()->json($reply);
+    }
+
+    //Route::put('/replies/{reply}', [ReplyController::class, 'updateReply']);
+
+    public function updateReply(Request $request, Reply $reply)
+    {
+        // user_idがログインユーザーのidと一致するかチェック
+        if ($reply->user_id !== Auth::id()) {
+            return response()->json([
+                'message' => '不正なアクセスです'
+            ]);
+        }
+
+        $reply->update([
+            'text' => $request->text
+        ]);
+        
+        $reply->save();
         return response()->json($reply);
     }
 }

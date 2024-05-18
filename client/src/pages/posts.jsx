@@ -38,10 +38,11 @@ const Posts = () => {
         </Head>
       <h3>一覧</h3>
 
-      <div>
+      <div className="m-10">
         {posts.map((post) => (
           <div>
             <button onClick={() => router.push(`/post/${post.id}`)}>{post.explanation}</button>
+            <audio controls src={post.sound_path}></audio>
           </div>
         ))}
       </div>

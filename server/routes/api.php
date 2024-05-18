@@ -12,9 +12,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    // ***********🌚投稿関係ここから******************************************************************
+    // ***********投稿関係ここから******************************************************************
     //　自身が作成したものを取得
-    //Route::get('/posts/home', [PostController::class, 'getMyPosts']);
+    Route::get('/posts/home', [PostController::class, 'getMyPosts']);
 
     //IDを指定して取得
     Route::get('/posts/{post}', [PostController::class, 'getOnePost']);
@@ -22,25 +22,31 @@ Route::middleware('auth:sanctum')->group(function () {
     // すべて取得
     Route::get('/posts/', [PostController::class, 'getPosts']);
 
+    //  編集
+    Route::put('/posts/{post}', [PostController::class, 'updatePost']);
+
     //　作成
     Route::post('/posts', [PostController::class, 'store']);
-
-    //　更新
 
     //　削除
     Route::delete('/posts/{post}', [PostController::class, 'deletePost']);
 
 
-    // *********** 🙆reply関係ここから******************************************************************
+    // *********** reply関係ここから******************************************************************
     //  作成
     Route::post('/replies/{post}', [ReplyController::class, 'storeReply']);
+
     //　取得
     Route::get('/replies/{post}', [ReplyController::class, 'getReply']);
+
     //  削除
     Route::delete('/replies/{reply}', [ReplyController::class, 'deleteReply']);
 
+    //  更新
+    Route::put('/replies/{reply}', [ReplyController::class, 'updateReply']);
 
-    // ***********⏺genre関係ここから******************************************************************
+
+    // ***********genre関係ここから******************************************************************
     Route::get('/genres', [GenreController::class, 'index']);
 
 });

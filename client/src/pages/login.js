@@ -1,4 +1,3 @@
-import ApplicationLogo from '@/components/ApplicationLogo'
 import AuthCard from '@/components/AuthCard'
 import AuthSessionStatus from '@/components/AuthSessionStatus'
 import Button from '@/components/Button'
@@ -46,11 +45,14 @@ const Login = () => {
     }
 
     return (
+        
         <GuestLayout>
             <AuthCard
                 logo={
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        <div className="flex justify-center">
+                            <img class="shadow-2xl rounded-full" src ="/images/Melody_match_logo.png" width="40%" height="50%"></img>
+                        </div>
                     </Link>
                 }>
                 {/* Session Status */}
