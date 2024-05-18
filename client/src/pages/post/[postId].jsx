@@ -58,19 +58,19 @@ const PostDetail = () => {
   },[postId]);
 
   
-  //未完成
+  // リプライの削除　投稿したユーザーのみ削除できる
   const deleteReply = async (replyId) => {
-    /*
     try {
-      const response = await laravelAxios.delete(`api/reply/${replyId}`);
+      const response = await laravelAxios.delete(`api/replies/${replyId}`);
+      console.log(response.data)
 
+      setReplies(replies.filter((reply) => reply.id !== replyId));
     } catch(err) {
       console.log(err);
     }
-    */
   }
 
-  //未完成
+  //　リプライの投稿
   const postReply = async () => {
 
     try {
@@ -79,7 +79,6 @@ const PostDetail = () => {
         post_id: postId
       });
 
-      console.log(response.data);
       setReplies(response.data);
       setText("");
 
@@ -144,7 +143,7 @@ const PostDetail = () => {
                     <p class="ml-36">{reply.text}</p>
                     <div class="flex flex-row-reverse">
                       {user.id === reply.user.id && <button class="pr-6">編集</button>}
-                      {user.id === reply.user.id && <button class="pr-3">削除</button>}
+                      {user.id === reply.user.id && <button class="pr-3" onClick={() => deleteReply(reply.id)}>削除</button>}
                     </div>
                   </div> 
                 </>
