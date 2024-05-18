@@ -3,14 +3,14 @@ import Head from 'next/head'
 
 const Dashboard = () => {
     return (
-        <AppLayout
+        <AppLayout sx={{textAlign: 'center'}}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
-                </h2>
+                <h3>
+                    Home
+                </h3>
             }>
             <Head>
-                <title>Laravel - Dashboard</title>
+                <title>Laravel - Home</title>
             </Head>
 
             <div className="py-12">
