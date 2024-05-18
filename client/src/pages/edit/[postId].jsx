@@ -91,26 +91,30 @@ const CreatePost = () => {
 
 
       <div class=" items-center justify-center w-100 h-28">
-        <h1 class="text-4xl text-black-700 text-center font-semibold">Post your audio file</h1>
+        <h1 class="text-4xl text-black-700 text-center font-semibold">Edit your audio post</h1>
   
-       
-          <h3 class="text-4xl text-black-700 text-center font-semibold">url</h3>
-          <div class="mb-0 text-right mr-1 text-xg">
-                    <a href={post.sound_path}><img src="../../../images/audio.png" alt="再生"></img></a>
-          </div>
+        
+            <div class="flex justify-center items-center mx-auto text-black-700 font-semibold w-7/12 p-5 my-10">
+                      <a href={post.sound_path}>
+                        <img src="../../../images/audio.png" alt="再生">
+                          </img>
+                          </a>
+            </div>
 
-          <h3 class="text-4xl text-black-700 text-center font-semibold">comment</h3>
-          <textarea class="flex mx-auto text-black-700 text-center font-semibold" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)} value={explanation}/>
+         
+          <textarea class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)} value={explanation}/>
 
-        <h3 class="text-4xl text-black-700 text-center font-semibold">ジャンル</h3>
-        <select class="flex mx-auto text-black-700 text-center font-semibold" name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
+   
+        <select class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
         {genres.map((genre) => (
           genre.id === post.genre_id ? <option key={genres.id} value={genre.id} selected>{genre.name}</option> : <option key={genres.id} value={genre.id}>{genre.name}</option>
      ))}
      
 	      </select>
+
+
         <div class= "flex items-center justify-center">
-        <button onClick={UpdataSound} class='flex text-center p-10 my-5 rounded border-black bg-orange '>Upload</button>
+        <button onClick={UpdataSound} class='flex items-center justify-center text-center w-7/12 p-5 my-10 bg-orange hover:bg-red-200 text-black font-bold py-2 px-4 rounded-full'>Upload</button>
         </div>
       </div>
       
