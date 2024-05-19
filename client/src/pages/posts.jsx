@@ -14,7 +14,6 @@ const Posts = () => {
     const fetchPosts = async () => {
       try {
         const response = await laravelAxios.get('/api/posts');
-        console.log(response.data);
         setPosts(response.data.posts);
       } catch(err) {
         console.log(err);

@@ -14,6 +14,7 @@ const CreatePost = () => {
   const [explanation, setExplanation] = useState("");
   const [genres, setGenres] = useState([]);
   const [record, setRecord] = useState(true);
+ 
 
   async function audioRecord(){
     try {
@@ -21,8 +22,7 @@ const CreatePost = () => {
       const buttonStop = document.querySelector('#buttonStop')
       const sound = document.querySelector('#audio')
       const Finput = document.querySelector('#failinp')
-      failinp
-      console.log(buttonStart)
+
 
 
       const stream = await navigator.mediaDevices.getUserMedia({ // <1>
@@ -52,8 +52,25 @@ const CreatePost = () => {
       audioRecorder.connect(audioContext.destination)
   
       buttonStart.addEventListener('click', event => {
+        buttonStart.classList.remove('bg-gray-600')
+        buttonStart.classList.remove('text-white')
+        buttonStart.classList.remove('hover:bg-gray-500')
+
+        buttonStart.classList.add('bg-gray-400')
+        buttonStart.classList.add("text-gray")
+
         buttonStart.setAttribute('disabled', 'disabled')
+
         buttonStop.removeAttribute('disabled')
+
+        buttonStop.classList.remove('bg-gray-400')
+        buttonStop.classList.remove('text-gray')
+        
+        buttonStop.classList.add('bg-gray-600')
+        buttonStop.classList.add('hover:bg-gray-500')
+        buttonStop.classList.add('text-white')
+        
+        
   
         const parameter = audioRecorder.parameters.get('isRecording')
         parameter.setValueAtTime(1, audioContext.currentTime) // <9>
@@ -62,12 +79,33 @@ const CreatePost = () => {
       })
   
       buttonStop.addEventListener('click', event => {
+        
+
+        buttonStop.classList.remove('bg-gray-600')
+        buttonStop.classList.remove('text-white')
+        buttonStop.classList.remove('hover:bg-gray-500')
+
+        buttonStop.classList.add('bg-gray-400')
+        buttonStop.classList.add("text-gray")
+
         buttonStop.setAttribute('disabled', 'disabled')
+        
+        buttonStart.classList.remove('bg-gray-400')
+        buttonStart.classList.remove('text-gray')
+        
+        buttonStart.classList.add('bg-gray-600')
+        buttonStart.classList.add('hover:bg-gray-500')
+        buttonStart.classList.add('text-white')
         buttonStart.removeAttribute('disabled')
+
+
+
+        
+        
   
         const parameter = audioRecorder.parameters.get('isRecording')
         parameter.setValueAtTime(0, audioContext.currentTime) // <10>
-        console.log(Finput);
+
         
   
         const blob = encodeAudio(buffers, settings) // <11>
@@ -104,7 +142,6 @@ const CreatePost = () => {
     const fetchGenres = async () => {
       try {
         const response = await laravelAxios.get('/api/genres');
-        console.log(response.data);
         setGenres(response.data.genres);
       } catch(err) {
         console.log(err);
@@ -179,7 +216,6 @@ const CreatePost = () => {
         },
       });
   
-      console.log(response.data);
       router.push(`/post/${response.data.post.id}`);
     } catch (err) {
       console.log(err);
@@ -218,7 +254,7 @@ const CreatePost = () => {
             <h3 class="text-4xl text-black-700 text-center font-semibold">Record</h3>
             <div>
               <button class="bg-gray-600 hover:bg-gray-500 text-white rounded px-4 py-2 m-2" type="button" id="buttonStart">Start</button>
-              <button class="bg-gray-600 hover:bg-gray-500 text-white rounded px-4 py-2 m-2" type="button" id="buttonStop" disabled>Stop</button>
+              <button class="bg-gray-600 hover:bg-gray-500 text-gray rounded px-4 py-2 m-2" type="button" id="buttonStop" disabled>Stop</button>
             </div>
             <div class="flex items-center justify-center">
               <audio controls id="audio"></audio>
