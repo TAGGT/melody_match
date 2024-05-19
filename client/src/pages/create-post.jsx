@@ -13,7 +13,7 @@ const CreatePost = () => {
   const [audio, setAudio] = useState();
   const [explanation, setExplanation] = useState("");
   const [genres, setGenres] = useState([]);
-  const [record, setRecord] = useState(false);
+  const [record, setRecord] = useState(true);
 
   async function audioRecord(){
     try {
@@ -202,48 +202,47 @@ const CreatePost = () => {
         </Head>
  
 
-      <div class=" items-center justify-center w-100 h-28">
-        <h1 class="text-4xl text-black-700 text-center font-semibold">Post your audio file</h1>
+      <div class=" items-center justify-center w-100">
+        <div class="m-4">
+          <h1 class="text-4xl text-black-700 text-center font-semibold">Post your audio file</h1>
 
-        <select class="flex mx-auto text-black-700 text-center font-semibold" name="upload-way" onChange={(e) => setRecord(!record)}>
-          <option key={0} value="record">record</option>
-          <option key={1} value="file">file</option>
-	      </select>
+          <select class="flex mx-auto text-black-700 text-center font-semibold" name="upload-way" onChange={(e) => setRecord(!record)}>
+            <option key={1} value="record">record</option>
+            <option key={0} value="file">file</option>
 
+          </select>
+        </div>
+        
 
-          <div id="record-audio" class="items-center justify-center w-100 h-28">
-              <h3 class="text-4xl text-black-700 text-center font-semibold">音声録音</h3>
-              <div>
-                <button class="m-1" type="button" id="buttonStart">Start</button>
-                <button class="m-1" type="button" id="buttonStop" disabled>Stop</button>
-              </div>
-              <div>
-                <audio controls id="audio"></audio>
-              </div>
-          </div>
-           
-          <div id="file-audio" class="items-center justify-center w-100 h-28">
-            <h3 class="text-4xl text-black-700 text-center font-semibold">url</h3>
-            <input class="flex mx-auto text-black-700 text-center font-semibold w-7/12 p-5 my-10" id="failinp" type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
-          </div>
+        <div id="record-audio" class="items-center justify-center w-100 m-4 text-center">
+            <h3 class="text-4xl text-black-700 text-center font-semibold">Record</h3>
+            <div>
+              <button class="bg-gray-600 hover:bg-gray-500 text-white rounded px-4 py-2 m-2" type="button" id="buttonStart">Start</button>
+              <button class="bg-gray-600 hover:bg-gray-500 text-white rounded px-4 py-2 m-2" type="button" id="buttonStop" disabled>Stop</button>
+            </div>
+            <div class="flex items-center justify-center">
+              <audio controls id="audio"></audio>
+            </div>
+        </div>
+        
+        <div class="flex flex-col items-center justify-center w-full m-4 text-center">
+          <div id="file-audio">
+            <h3 class="text-4xl text-black-700 text-center font-semibold">File</h3>
+            <input class="text-black-700 text-center font-semibold p-5 my-2" id="failinp" type='file' accept='audio/*' onChange={(e) => setAudio(e.target.files[0])} />
+          </div>          
+        </div>
             
 
-          
-          
-
-
-          <h3 class="text-4xl text-black-700 text-center font-semibold">comment</h3>
-          <textarea class="flex mx-auto text-black-700 text-center font-semibold" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)}>
+        <h3 class="text-4xl text-black-700 text-center font-semibold">comment</h3>
+        <textarea rows="4" cols="40" class="flex mx-auto text-black-700 text-center font-semibold" placeholder="Comment" onChange={(e) => setExplanation(e.target.value)}>
           {explanation}
-          </textarea>
-
+        </textarea>
 
         
         <select class="flex mx-auto text-black-700 text-center font-semibold text-center w-7/12 p-5 my-10" name="post[genre_id]" onChange={(e) => setGenre_id(e.target.value)}>
-        {genres.map((genre) => (
+          {genres.map((genre) => (
           <option key={genres.id} value={genre.id}>{genre.name}</option>
-       
-     ))}
+        ))}
 	      </select>
 
 
