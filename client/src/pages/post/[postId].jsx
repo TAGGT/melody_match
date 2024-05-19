@@ -128,7 +128,7 @@ const PostDetail = () => {
       });
 
       console.log(response.data);
-      setReplies(response.data);
+      setReplies([...replies, response.data]);
       setText("");
       window.location.reload();
 
@@ -191,8 +191,6 @@ const PostDetail = () => {
                     <p class="ml-36 pt-4 underline text-xl">{reply.user.name}</p>
                     <p class="ml-36 text-xl">{reply.text}</p>
                     <div class="flex flex-row-reverse mr-6">
-                      {user.id === reply.user.id && <button class="w-12 h-6 pr-3 text-right text-base border border-blue-900 rounded"> 編集</button>}
-                      <div class="pl-2"></div>
                       {user.id === reply.user.id && <button class="w-12 h-6 pr-3 text-right text-base border border-blue-900 rounded"> 削除</button>}
                     </div>
                   </div>

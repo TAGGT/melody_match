@@ -13,13 +13,19 @@ class ReplyController extends Controller
 {
     public function storeReply(Request $request, Post $post)
     {
+        //バリデーション
+        $request->validate([
+            'text' => 'required|string|max:2023'
+        ]);
+
         $reply = Reply::create([
             'post_id' => $post->id,
             'user_id' => Auth::id(),
             'text' => $request->text
         ]);
+
         //　最適化の余地あり
-        $reply = Reply::where('post_id', $post->id)->with('user')->get();
+        $reply = Reply::where('id', $reply->id)->with('user')->get();
 
         return response()->json($reply);
     }

@@ -15,6 +15,14 @@ class PostController extends Controller
     //保存処理
     public function store(Request $request)
     {
+
+        //バリデーション
+        $request->validate([
+            'audio' => 'required|file',
+            'explanation' => 'required|string|max:255',
+            'genre_id' => 'required|integer'
+        ]);
+
         //Cloudinaryに音声ファイルをアップロード
         $audioFile = $request->file('audio');
 
@@ -78,17 +86,18 @@ class PostController extends Controller
     //投稿更新
     public function updatePost(Request $request, Post $post)
     {
+        //バリデーション
+        $request->validate([
+            'explanation' => 'required|string|max:255',
+            'genre_id' => 'required|integer'
+        ]);
+
         // user_idがログインユーザーのidと一致するかチェック
         if ($post->user_id !== Auth::id()) {
             return response()->json([
                 'message' => '不正なアクセスです'
             ]);
         }
-
-        $post->update([
-            'explanation' => $request->explanation,
-            'genre_id' => $request->genre_id
-        ]);
 
         //後で消してもいいかも
         return response()->json([
