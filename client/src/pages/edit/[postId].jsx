@@ -39,9 +39,7 @@ const CreatePost = () => {
           const response = await laravelAxios.get(`/api/posts/${postId}`);
           
           // conosle.log(response.data)でデータが取れているか確認 ブラウザの開発者ツールのconsoleに表示される
-          console.log(response.data);
           setPost(response.data.post);
-          console.log(response.data.post.explanation);
           setExplanation(response.data.post.explanation);
           setGenre_id(response.data.post.genre_id);
         } catch(err) {
@@ -62,7 +60,6 @@ const CreatePost = () => {
         explanation: explanation
       });
 
-      console.log(response.data);
       router.push(`/post/${response.data.post.id}`);
     } catch(err) {
       console.log(err);

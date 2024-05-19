@@ -22,8 +22,7 @@ const CreatePost = () => {
       const buttonStop = document.querySelector('#buttonStop')
       const sound = document.querySelector('#audio')
       const Finput = document.querySelector('#failinp')
-      failinp
-      console.log(buttonStart)
+
 
 
       const stream = await navigator.mediaDevices.getUserMedia({ // <1>
@@ -106,7 +105,7 @@ const CreatePost = () => {
   
         const parameter = audioRecorder.parameters.get('isRecording')
         parameter.setValueAtTime(0, audioContext.currentTime) // <10>
-        console.log(Finput);
+
         
   
         const blob = encodeAudio(buffers, settings) // <11>
@@ -143,7 +142,6 @@ const CreatePost = () => {
     const fetchGenres = async () => {
       try {
         const response = await laravelAxios.get('/api/genres');
-        console.log(response.data);
         setGenres(response.data.genres);
       } catch(err) {
         console.log(err);
@@ -218,7 +216,6 @@ const CreatePost = () => {
         },
       });
   
-      console.log(response.data);
       router.push(`/post/${response.data.post.id}`);
     } catch (err) {
       console.log(err);

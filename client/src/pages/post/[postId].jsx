@@ -79,7 +79,6 @@ const PostDetail = () => {
           const response = await laravelAxios.get(`/api/posts/${postId}`);
           
           // conosle.log(response.data)でデータが取れているか確認 ブラウザの開発者ツールのconsoleに表示される
-          console.log(response.data);
           setPost(response.data.post);
         } catch(err) {
           console.log(err);
@@ -92,7 +91,6 @@ const PostDetail = () => {
       {
         try {
           const response = await laravelAxios.get(`/api/replies/${postId}`);
-          console.log(response.data);
           setReplies(response.data);
         } catch(err) {
           console.log(err);
@@ -127,7 +125,6 @@ const PostDetail = () => {
         post_id: postId
       });
 
-      console.log(response.data);
       setReplies([...replies, response.data]);
       setText("");
       window.location.reload();

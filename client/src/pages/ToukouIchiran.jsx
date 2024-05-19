@@ -36,7 +36,6 @@ const ToukouIchiran = () => {
             try {
                 const response = await laravelAxios.get('/api/posts/');
                 setToukous(response.data.posts);
-                console.log(response.data.posts); // ここでログを出力して確認
             } catch (error) {
                 console.error("Error:", error);
             }
